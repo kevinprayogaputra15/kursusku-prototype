@@ -1,44 +1,70 @@
 <?php
-$courseName = 'Laravel Fundamental';
-$fee = 2500000;
-$participantCount = 3;
-$discountPercent = 10;
-$adminFee = 50000;
-$isActive = true;
+require_once __DIR__ . '/helpers.php';
 
-$subtotal = $fee * $participantCount;
-$discount = intdiv($subtotal * $discountPercent, 100);
-$total = $subtotal - $discount + $adminFee;
+$courses = require __DIR__ . '/data/courses.php';
+
+// Pertemuan 5: kalkulator memakai GET karena hasilnya boleh di-bookmark/dibagikan.
+$selectedCode     = $_GET['course'] ?? $courses[0]['code'];
+$participantCount = max(1, min(10, (int) ($_GET['participants'] ?? 1)));
+
+$course = cariKursus($courses, (string) $selectedCode) ?? $courses[0];
+
+$discountPercent = 10;   // diskon 10% untuk pendaftaran berkelompok
+$adminFee        = 50000;
+
+$subtotal = $course['fee'] * $participantCount;
+$discount = $participantCount >= 3 ? intdiv($subtotal * $discountPercent, 100) : 0;
+$total    = $subtotal - $discount + $adminFee;
+
+$siteName  = 'KursusKu';
+$pageTitle = 'Estimasi Biaya';
+require __DIR__ . '/partials/header.php';
 ?>
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Kalkulator Biaya - KursusKu</title>
-  <style>
-    body{font-family:Arial,sans-serif;background:#f5f7f6;margin:0;padding:32px;color:#16332c}
-    .card{max-width:720px;margin:auto;background:white;padding:24px;border-radius:16px}
-    table{width:100%;border-collapse:collapse}
-    th,td{border-bottom:1px solid #ddd;padding:10px;text-align:left}
-    .total{background:#eaf7f3;font-weight:bold}
-    a{color:#0f766e}
-  </style>
-</head>
-<body>
-  <main class="card">
-    <h1>Kalkulator Estimasi Biaya</h1>
-    <p>Kursus: <strong><?= $courseName ?></strong></p>
-    <table>
-      <tr><th>Komponen</th><th>Nilai</th></tr>
-      <tr><td>Biaya per peserta</td><td>Rp <?= number_format($fee,0,',','.') ?></td></tr>
-      <tr><td>Jumlah peserta</td><td><?= $participantCount ?></td></tr>
-      <tr><td>Subtotal</td><td>Rp <?= number_format($subtotal,0,',','.') ?></td></tr>
-      <tr><td>Diskon (<?= $discountPercent ?>%)</td><td>- Rp <?= number_format($discount,0,',','.') ?></td></tr>
-      <tr><td>Biaya admin</td><td>Rp <?= number_format($adminFee,0,',','.') ?></td></tr>
-      <tr class="total"><td>Total akhir</td><td>Rp <?= number_format($total,0,',','.') ?></td></tr>
-    </table>
-    <p><a href="index.php">Kembali ke Beranda KursusKu</a></p>
-  </main>
-</body>
-</html>
+<main class="container">
+  <section class="page-intro">
+    <p class="eyebrow">Kalkulator</p>
+    <h1>Estimasi Biaya Kursus</h1>
+    <p>Pilih kursus dan jumlah peserta. Diskon <?= $discountPercent ?>% berlaku untuk 3 peserta atau lebih.</p>
+  </section>
+
+  <section class="form-card">
+    <form action="fee-calculator.php" method="GET">
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="course">Kursus</label>
+          <select id="course" name="course">
+            <?php foreach ($courses as $item): ?>
+              <option value="<?= e($item['code']) ?>" <?= $item['code'] === $course['code'] ? 'selected' : '' ?>>
+                <?= e($item['name']) ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="participants">Jumlah Peserta (1-10)</label>
+          <input id="participants" name="participants" type="number" min="1" max="10"
+                 value="<?= $participantCount ?>">
+        </div>
+      </div>
+      <button class="btn-primary" type="submit">Hitung Estimasi</button>
+    </form>
+  </section>
+
+  <section class="summary-card">
+    <h2>Rincian: <?= e($course['name']) ?></h2>
+    <div class="table-wrap">
+      <table class="data-table">
+        <tr><th>Komponen</th><th>Nilai</th></tr>
+        <tr><td>Biaya per peserta</td><td><?= rupiah($course['fee']) ?></td></tr>
+        <tr><td>Jumlah peserta</td><td><?= $participantCount ?></td></tr>
+        <tr><td>Subtotal</td><td><?= rupiah($subtotal) ?></td></tr>
+        <tr><td>Diskon (<?= $discountPercent ?>%)</td><td>- <?= rupiah($discount) ?></td></tr>
+        <tr><td>Biaya admin</td><td><?= rupiah($adminFee) ?></td></tr>
+        <tr class="total"><td>Total akhir</td><td><?= rupiah($total) ?></td></tr>
+      </table>
+    </div>
+    <p><a class="btn-primary" href="registration.php">Lanjut Daftar</a>
+       <a class="btn-outline" href="index.php#katalog">Kembali ke Katalog</a></p>
+  </section>
+</main>
+<?php require __DIR__ . '/partials/footer.php'; ?>
