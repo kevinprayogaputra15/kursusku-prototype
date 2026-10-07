@@ -1,0 +1,8 @@
+Enam screenshot minimum (ambil sendiri, simpan di folder ini):
+01-form-lengkap.png          register.php sebelum dikirim
+02-ringkasan-mahasiswa.png   hasil peserta mahasiswa
+03-ringkasan-guru-umum.png   hasil peserta guru atau umum
+04-checkbox-banyak.png       beberapa minat terpilih tampil di ringkasan
+05-minat-kosong.png          "Belum memilih minat." tanpa warning
+06-history-dummy.png         history.php
+Opsional: 07-loop-lab.png, 08-error-validasi.png

@@ -22,7 +22,6 @@ $siteName = $siteName ?? 'KursusKu';
       <a href="index.php#katalog">Katalog</a>
       <a href="fee-calculator.php">Estimasi Biaya</a>
       <a href="history.php">History Dummy</a>
-      <a href="test-matrix.php">Test Matrix</a>
       <a href="register.php" class="nav-cta">Daftar Kursus</a>
     </nav>
   </div>

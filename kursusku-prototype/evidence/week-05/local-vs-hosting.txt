@@ -1,0 +1,19 @@
+LOCAL DEVELOPMENT vs HOSTING / PRODUCTION
+(Tulis ulang dengan kalimat Anda sendiri sebelum dikumpulkan.)
+
+Aspek         | Local (Laragon)                     | Hosting / Production
+URL           | kursusku-prototype.test / localhost | Domain atau subdomain publik
+Lokasi file   | Laptop mahasiswa                    | Server hosting
+Database      | MySQL lokal Laragon                 | Database di server hosting
+Environment   | Development                         | Production
+HTTPS / SSL   | Tidak selalu tersedia               | Seharusnya aktif (melindungi data saat transit)
+Debug         | Boleh menampilkan error detail      | Jangan tampilkan detail error sensitif
+Secret        | Disimpan lokal, tidak dibagikan     | Disimpan aman sebagai konfigurasi server
+Document root | Folder proyek di Laragon            | Folder web yang ditentukan provider (Laravel: folder public)
+
+Checklist sebelum hosting:
+[ ] Semua path relatif (tidak bergantung lokasi laptop)
+[ ] Tidak ada password/API key di source code
+[ ] Link internal dan aset sudah diuji
+[ ] Halaman mobile sudah diuji
+[ ] Paham bahwa HTTPS melindungi data saat transit (POST saja tidak cukup)

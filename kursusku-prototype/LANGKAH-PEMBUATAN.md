@@ -17,7 +17,6 @@ kursusku-prototype/
 ├── fee-calculator.php         Estimasi biaya, form GET (P3 -> P6)
 ├── history.php                Data dummy + foreach (P6)
 ├── loop-lab.php               Latihan for / while / do-while / if / switch (P6)
-├── test-matrix.php            Halaman Test Matrix: 12 skenario dijalankan langsung (P6)
 ├── data.php                   SATU sumber data: courses, interestOptions, facilities, dll.
 ├── helpers.php                e, formatRupiah, findCourse, getDiscountPercent, getLearningModeLabel, hitungBiaya, postString ...
 ├── partials/header.php, footer.php
@@ -94,13 +93,7 @@ Tabel uji manual: PHP Dasar / Mahasiswa / 1 paket = Rp320.000; Guru = Rp340.000;
 - `history.php`: array dummy + `foreach ($history as $index => $item)`; ini bukan CRUD.
 - `loop-lab.php`: `for`, `while`, `do-while` dengan satu variabel `$limit`. Latihan: ubah 5 menjadi 3 dan jelaskan bagian mana yang menghentikan loop.
 
-### E. Halaman Test Matrix (`test-matrix.php`)
-1. Validasi dari `process.php` dipindah ke `helpers.php` (`validateRegistration`, `getInterestLabels`, `shouldRedirectToForm`) agar bisa dipakai `process.php` dan halaman uji.
-2. Tiap skenario = `[nama, actual, expected]`; actual dihitung dengan fungsi asli, status `PASS` jika `actual === expected`.
-3. Tautan "Test Matrix" ada di navigasi (`partials/header.php`). Jika Anda mengubah harga/aturan di `data.php` atau `helpers.php`, baris yang tidak cocok otomatis menjadi **FAIL**.
-4. Halaman ini alat bantu; evidence tugas tetap `evidence/week-06/test-matrix.txt` + screenshot halaman ini sebagai `07-test-matrix.png`.
-
-### F. Integrasi dan pengujian
+### E. Integrasi dan pengujian
 1. Navigasi: Beranda, Katalog, Estimasi Biaya, History Dummy, Daftar Kursus (semua halaman lewat `partials/header.php`).
 2. Jalankan 12 test di `evidence/week-06/test-matrix.txt`; jika FAIL, cari penyebab di input/branching/loop/type conversion, perbaiki, ulang test itu.
 3. Ambil 6 screenshot (`CHECKLIST-SCREENSHOT.txt`), isi refleksi dan AI usage log.

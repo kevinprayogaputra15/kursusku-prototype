@@ -1,0 +1,6 @@
+Screenshot yang harus Anda ambil sendiri dan simpan di folder ini:
+01-form-desktop.png   -> registration.php lebar desktop
+02-form-mobile.png    -> registration.php di DevTools ~360 px
+03-post-result.png    -> halaman hasil setelah submit (POST)
+04-get-url.png        -> address bar saat method sementara GET (data terlihat di URL)
+05-navigation.png     -> alur Beranda -> Katalog -> Daftar
